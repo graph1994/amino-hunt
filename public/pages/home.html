@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-show="!aligned">
   <div class="card card-block col-lg-8 col-xl-offset-2">
     <div class="">
       <div class="col-lg-12">
@@ -9,18 +9,43 @@
           <span class="input-group-btn">
             <button class="btn btn-secondary" type="submit">Go!</button>
           </span>
-          <textarea type="text" class="form-control" placeholder="Search for..." ng-model="search" ></textarea>
+          <textarea type="text" class="form-control" placeholder="Search for..." ng-model="query" ></textarea>
         </div>
       </form>
       </div>
    </div>
  </div>
 </div>
+<div class="card card-block col-lg-10 col-xl-offset-1" ng-show="aligned">
+  <h2>Results</h2>
+
+  <table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Name</th>
+      <th>Aligned Sequence</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="sequence in aligned">
+      <th scope="row">{{sequence.Name}}</th>
+      <td>{{sequence.align}}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+</div>
+<div class="row">
+  <span><button class="btn btn-primary center-block" ng-click="aligned = false">Reset</button></span>
+</div>
 <div class="" ng-repeat="id in collectionOfArticles.data.linksets[0].idurllist">
   <div class="col-lg-4">
     <a href="{{id.objurls[0].url.value}}">Article Link!<a>
   </div>
 </div>
+
 <!-- <div class="">
   <textarea name="name" rows="8" cols="40" ng-model="fasta" placeholder="Paste Fasta file here"></textarea>
 

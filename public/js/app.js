@@ -12,11 +12,18 @@ aminoHunt.config(function($stateProvider, $urlRouterProvider,$httpProvider,$loca
     controller: 'mainCtrl',
     controllerAs: 'main'
   })
+  .state('results', {
+    url: '/Results',
+    templateUrl: '/pages/results.html',
+    controller: 'mainCtrl',
+    controllerAs: 'main'
+  })
   // $locationProvider.html5Mode(true);
 
 });
 
-aminoHunt.controller('mainCtrl',['$scope','$http','data',function($scope,$http,data){
+aminoHunt.controller('mainCtrl',['$scope','$http','data','$state',function($scope,$http,data,$state){
+  $scope.search = ""
   function getData(){
     $http.get("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=protein&&retmax=10&retmode=json&term=" + $scope.search + "&field=title")
       .then(function(response){ $scope.details = response.data;
@@ -76,10 +83,19 @@ aminoHunt.controller('mainCtrl',['$scope','$http','data',function($scope,$http,d
    //getLink();
   //getAutoComplete();
     var d = $scope.search
-    data.get({data:$scope.search}).$promise.then(function (result) {
-     console.log(result);
-   });
 
+    data.get({data:$scope.query}).$promise.then(function (result) {
+
+     $scope.aligned = result;
+     console.log($scope.aligned)
+    //  $state.go('results')
+   });
+  //  $scope.$watch(
+  //                  "algined",
+  //                  function handleFooChange() {
+  //                     $state.go('results')
+  //                  }
+  //              );
 
   console.log($scope.search)
   //parseFasta();

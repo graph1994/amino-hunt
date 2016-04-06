@@ -28,24 +28,29 @@ var Schema = mongoose.Schema;
 //Define the model based on schema, set the collection
 
 app.get('/python',function(req,res){
-	var pyshell = new PythonShell('alignment.py', {
+	var pyshell = new PythonShell('align.py', {
 								 mode: 'text'
 						 });
 	output = [];
 	//console.log("test")
 //	console.log(req.query)
-	pyshell.send('G');
+console.log(req.query.data)
+	pyshell.send(">seq0 \n" +
+'FQTWEEFSRAAEKLYLADPMKVRVVLKYRHVDGNLCIKVTDDLVCLVYRTDQAQDVKKIEKF \n' +
+'>seq1 \n' +
+'KYRTWEEFTRAAEKLYQADPMKVRVVLKYRHCDGNLCIKVTDDVVCLLYRTDQAQDVKKIEKFHSQLMRLME LKVTDNKECLKFKTDQAQEAKKMEKLNNIFFTLM');
 pyshell.stdout.on('data', function (data) {
 // received a message sent from the Python script (a simple "print" statement)
-	console.log(data)
+	console.log(data.replace(/'/g, '"'))
  //output = data;
 
 
- 	output.push(data)
-
+ 	output = data;
+	output = output.replace(/'/g, '"')
 });
 pyshell.end(function (err) {
-	return res.send(output)
+
+	return res.send(output);
   if (err) throw err;
   console.log('finished');
 });

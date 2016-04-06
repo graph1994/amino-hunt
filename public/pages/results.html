@@ -1,0 +1,21 @@
+<div class="card card-block col-lg-10 col-xl-offset-1">
+  <h2>Results</h2>
+  {{aligned}}
+  <table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Name</th>
+      <th>Aligned Sequence</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="sequence in aligned">
+      <th scope="row">{{sequence}}</th>
+      <td>{{sequence.align}}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+</div>
