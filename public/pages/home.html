@@ -9,11 +9,16 @@
           <span class="input-group-btn">
             <button class="btn btn-secondary" type="submit">Go!</button>
           </span>
-          <textarea type="text" class="form-control" placeholder="Search for..." ng-model="query" ></textarea>
+          <textarea type="text" class="form-control" placeholder="Enter two Fasta Files:
+
+          " ng-model="query" ></textarea>
         </div>
       </form>
       </div>
    </div>
+ </div>
+ <div class="col-lg-12 text-center">
+   <span class="btn btn-primary" ng-click="setExample()">Example</span>
  </div>
 </div>
 <div class="card card-block col-lg-10 col-xl-offset-1 text-center" ng-show="aligned">

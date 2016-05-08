@@ -82,6 +82,7 @@ aminoHunt.controller('mainCtrl',['$scope','$http','data','$state',function($scop
    //getData();
    //getLink();
   //getAutoComplete();
+  console.log($scope.query)
     var d = $scope.search
 
     data.get({data:$scope.query}).$promise.then(function (result) {
@@ -103,7 +104,10 @@ aminoHunt.controller('mainCtrl',['$scope','$http','data','$state',function($scop
   console.log($scope.search)
   //parseFasta();
 };
-
+$scope.setExample = function(){
+  $scope.query = ">Sample1\nGAATTCAGTTA\n>Sample2\nGGATCGA";
+  
+}
 
 
 }]);
