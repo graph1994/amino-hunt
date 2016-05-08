@@ -87,7 +87,7 @@ aminoHunt.controller('mainCtrl',['$scope','$http','data','$state',function($scop
     data.get({data:$scope.query}).$promise.then(function (result) {
 
      $scope.aligned = [result[0],result[1]];
-     console.log($scope.aligned[0].align.spilt(""));
+    // console.log($scope.aligned[0].align.spilt(""));
      $scope.matrix = result[2]["matrix"];
      console.log($scope.matrix)
      console.log($scope.aligned)
