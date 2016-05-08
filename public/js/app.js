@@ -24,61 +24,61 @@ aminoHunt.config(function($stateProvider, $urlRouterProvider,$httpProvider,$loca
 
 aminoHunt.controller('mainCtrl',['$scope','$http','data','$state',function($scope,$http,data,$state){
   $scope.search = ""
-  function getData(){
-    $http.get("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=protein&&retmax=10&retmode=json&term=" + $scope.search + "&field=title")
-      .then(function(response){ $scope.details = response.data;
-        $scope.details.esearchresult.idlist.reduce(function(list,item){return list.concat(item)});
-
-        console.log($scope.details.esearchresult.idlist);
-
-      });
-  }
-  function getLink(){
-
-
-      var article = {}
-    $http.get("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&retmode=json&id=" + $scope.details.esearchresult.idlist + "&cmd=prlinks")
-    .then(function(response){
-      //console.log(response)
-      var links = response;
-      $scope.collectionOfArticles = response;
-      console.log($scope.collectionOfArticles);
-    });
-    $http.get("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=protein&retmode=json&rettype=abstract&id="+$scope.details.esearchresult.idlist)
-    .then(function(response){
-
-
-     console.log(response)
-    })
-
-
-
-  }
-
-  function getAutoComplete(){
-    //  var invocation = new XMLHttpRequest();
-      var url = "http://blast.ncbi.nlm.nih.gov/portal/utils/autocomp.fcgi?dict=taxids_sg&q=";
-      // if($scope.search) {
-      //   invocation.open('GET', url+$scope.search, true);
-      //   //invocation.onreadystatechange = handler;
-      //   invocation.send();
-      // }
-     $http.get("http://blast.ncbi.nlm.nih.gov/portal/utils/autocomp.fcgi?dict=taxids_sg&q="+ $scope.search)
-    .then(function(response){
-      console.log(response)
-      return false;
-    });
-  }
-  function parseFasta(){
-    var parseFasta = {};
-    var tempFasta = $scope.fasta.split("\n");
-    //console.log(tempFasta[0])
-    parseFasta.name = tempFasta[0];
-    parseFasta.sequence = tempFasta.slice(1,-1).join('');
-    //console.log(parseFasta)
-    return parseFasta
-  }
-  $scope.findArticles = function(){
+  // function getData(){
+  //   $http.get("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=protein&&retmax=10&retmode=json&term=" + $scope.search + "&field=title")
+  //     .then(function(response){ $scope.details = response.data;
+  //       $scope.details.esearchresult.idlist.reduce(function(list,item){return list.concat(item)});
+  //
+  //       console.log($scope.details.esearchresult.idlist);
+  //
+  //     });
+  // }
+  // function getLink(){
+  //
+  //
+  //     var article = {}
+  //   $http.get("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&retmode=json&id=" + $scope.details.esearchresult.idlist + "&cmd=prlinks")
+  //   .then(function(response){
+  //     //console.log(response)
+  //     var links = response;
+  //     $scope.collectionOfArticles = response;
+  //     console.log($scope.collectionOfArticles);
+  //   });
+  //   $http.get("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=protein&retmode=json&rettype=abstract&id="+$scope.details.esearchresult.idlist)
+  //   .then(function(response){
+  //
+  //
+  //    console.log(response)
+  //   })
+  //
+  //
+  //
+  // }
+  //
+  // function getAutoComplete(){
+  //   //  var invocation = new XMLHttpRequest();
+  //     var url = "http://blast.ncbi.nlm.nih.gov/portal/utils/autocomp.fcgi?dict=taxids_sg&q=";
+  //     // if($scope.search) {
+  //     //   invocation.open('GET', url+$scope.search, true);
+  //     //   //invocation.onreadystatechange = handler;
+  //     //   invocation.send();
+  //     // }
+  //    $http.get("http://blast.ncbi.nlm.nih.gov/portal/utils/autocomp.fcgi?dict=taxids_sg&q="+ $scope.search)
+  //   .then(function(response){
+  //     console.log(response)
+  //     return false;
+  //   });
+  // }
+  // function parseFasta(){
+  //   var parseFasta = {};
+  //   var tempFasta = $scope.fasta.split("\n");
+  //   //console.log(tempFasta[0])
+  //   parseFasta.name = tempFasta[0];
+  //   parseFasta.sequence = tempFasta.slice(1,-1).join('');
+  //   //console.log(parseFasta)
+  //   return parseFasta
+  // }
+  $scope.align = function(){
    //getData();
    //getLink();
   //getAutoComplete();
@@ -86,7 +86,10 @@ aminoHunt.controller('mainCtrl',['$scope','$http','data','$state',function($scop
 
     data.get({data:$scope.query}).$promise.then(function (result) {
 
-     $scope.aligned = result;
+     $scope.aligned = [result[0],result[1]];
+     console.log($scope.aligned[0].align.spilt(""));
+     $scope.matrix = result[2]["matrix"];
+     console.log($scope.matrix)
      console.log($scope.aligned)
     //  $state.go('results')
    });

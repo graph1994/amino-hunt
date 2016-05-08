@@ -67,7 +67,7 @@ def align(s1,s2):
            # print("left")
             i = i - 1
             alignt = alignt[:i] + '-' + alignt[i:]
-    return aligns,alignt
+    return aligns,alignt,a
 
 def parse_fasta(file):
     results = []
@@ -95,8 +95,10 @@ result = parse_fasta(sys.stdin
 s1 = result[0]["sequence"]
 s2 = result[1]["sequence"]
 
-s1,s2 = align(s1,s2)
+s1,s2,array = align(s1,s2)
 result[0]["align"] = s1
 result[1]["align"] = s2
-
+json_data = {}
+json_data["matrix"] = array
+result.append(json_data)
 print result

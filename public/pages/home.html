@@ -2,7 +2,7 @@
   <div class="card card-block col-lg-8 col-xl-offset-2">
     <div class="">
       <div class="col-lg-12">
-        <form class="" name="search" ng-submit="findArticles()">
+        <form class="" name="search" ng-submit="align()">
 
 
         <div class="input-group">
@@ -16,10 +16,10 @@
    </div>
  </div>
 </div>
-<div class="card card-block col-lg-10 col-xl-offset-1" ng-show="aligned">
-  <h2>Results</h2>
+<div class="card card-block col-lg-10 col-xl-offset-1 text-center" ng-show="aligned">
+  <h2>Results of Global Pairwise Alignment</h2>
 
-  <table class="table">
+  <table class="table table-hover">
   <thead class="thead-inverse">
     <tr>
       <th>Name</th>
@@ -30,20 +30,25 @@
   <tbody>
     <tr ng-repeat="sequence in aligned">
       <th scope="row">{{sequence.Name}}</th>
-      <td>{{sequence.align}}</td>
+      <td class="text-left">{{sequence.align}}</td>
     </tr>
 
   </tbody>
 </table>
 
+
+<hr/>
+
+<div class="text-center">
+
+<h3>Matrix</h3>
+<div class="row" ng-repeat="row in matrix track by $index">
+  |
+  <span class="" ng-repeat="col in row track by $index">
+    {{col}} |
+  </span>
 </div>
-<div class="row">
-  <span><button class="btn btn-primary center-block" ng-click="aligned = false">Reset</button></span>
 </div>
-<div class="" ng-repeat="id in collectionOfArticles.data.linksets[0].idurllist">
-  <div class="col-lg-4">
-    <a href="{{id.objurls[0].url.value}}">Article Link!<a>
-  </div>
 </div>
 
 <!-- <div class="">

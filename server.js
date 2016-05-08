@@ -10,23 +10,6 @@ var PythonShell = require('python-shell');
 var output;
 
 
-mongoose.connect("mongodb://graff:password@ds033875.mongolab.com:33875/stock_symbols", function(err, db) {
-	if(!err) {
-	    console.log("We are connected");
-	}
-	else{
-	    //If it can connect alert the user!
-	    alert("Could not connect to MongoLabs!")
-		}
-    });
-
-
-//Setup the Stock schema
-var Schema = mongoose.Schema;
-
-
-//Define the model based on schema, set the collection
-
 app.get('/python',function(req,res){
 	var pyshell = new PythonShell('align.py', {
 								 mode: 'text'
@@ -35,10 +18,7 @@ app.get('/python',function(req,res){
 	//console.log("test")
 //	console.log(req.query)
 console.log(req.query.data)
-	pyshell.send(">seq0 \n" +
-'FQTWEEFSRAAEKLYLADPMKVRVVLKYRHVDGNLCIKVTDDLVCLVYRTDQAQDVKKIEKF \n' +
-'>seq1 \n' +
-'KYRTWEEFTRAAEKLYQADPMKVRVVLKYRHCDGNLCIKVTDDVVCLLYRTDQAQDVKKIEKFHSQLMRLME LKVTDNKECLKFKTDQAQEAKKMEKLNNIFFTLM');
+	pyshell.send(req.query.data);
 pyshell.stdout.on('data', function (data) {
 // received a message sent from the Python script (a simple "print" statement)
 	console.log(data.replace(/'/g, '"'))
@@ -59,7 +39,7 @@ pyshell.end(function (err) {
 });
 
 //Set the port to localhost:8000!
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 8001;
 
 //directory that has my index.html!
 app.use(express.static(__dirname + '/public'));
